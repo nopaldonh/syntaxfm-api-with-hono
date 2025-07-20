@@ -1,5 +1,5 @@
 import { OpenAPIHono } from "@hono/zod-openapi";
-import { notFound } from "stoker/middlewares";
+import { notFound, onError } from "stoker/middlewares";
 
 const app = new OpenAPIHono();
 
@@ -8,5 +8,6 @@ app.get("/", (c) => {
 });
 
 app.notFound(notFound);
+app.onError(onError);
 
 export default app;
