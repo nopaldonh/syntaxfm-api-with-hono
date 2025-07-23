@@ -1,4 +1,7 @@
 import { createRoute, z } from "@hono/zod-openapi";
+import * as HttpStatusCodes from "stoker/http-status-codes";
+import { jsonContent } from "stoker/openapi/helpers";
+import { createMessageObjectSchema } from "stoker/openapi/schemas";
 
 import { createRouter } from "@/lib/create-app";
 
@@ -7,21 +10,15 @@ const router = createRouter()
     method: "get",
     path: "/",
     responses: {
-      200: {
-        content: {
-          "application/json": {
-            schema: z.object({
-              message: z.string(),
-            }),
-          },
-        },
-        description: "Tasks API Index",
-      },
+      [HttpStatusCodes.OK]: jsonContent(
+        createMessageObjectSchema("Task API"),
+        "Tasks API Index",
+      ),
     },
   }), (c) => {
     return c.json({
       message: "Tasks API",
-    });
+    }, HttpStatusCodes.OK);
   });
 
 export default router;
