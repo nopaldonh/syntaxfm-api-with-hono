@@ -1,22 +1,6 @@
-import type { PinoLogger } from "hono-pino";
+import createApp from "@/lib/create-app";
 
-import { OpenAPIHono } from "@hono/zod-openapi";
-import { requestId } from "hono/request-id";
-import { notFound, onError, serveEmojiFavicon } from "stoker/middlewares";
-
-import { logger } from "./middlewares/pino-logger";
-
-interface AppBindings {
-  Variables: {
-    logger: PinoLogger;
-  };
-}
-
-const app = new OpenAPIHono<AppBindings>();
-
-app.use(serveEmojiFavicon("📝"));
-app.use(requestId({ generator: () => crypto.randomUUID() }));
-app.use(logger());
+const app = createApp();
 
 app.get("/", (c) => {
   return c.text("Hello Hono!");
@@ -27,8 +11,5 @@ app.get("/error", (c) => {
   c.var.logger.info("Error log info.");
   throw new Error("Oh No!");
 });
-
-app.notFound(notFound);
-app.onError(onError);
 
 export default app;
