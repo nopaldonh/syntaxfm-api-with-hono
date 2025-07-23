@@ -7,7 +7,9 @@ import { logger } from "@/middlewares/pino-logger";
 import type { AppBindings } from "./types";
 
 export default function createApp() {
-  const app = new OpenAPIHono<AppBindings>();
+  const app = new OpenAPIHono<AppBindings>({
+    strict: false,
+  });
   app.use(serveEmojiFavicon("📝"));
   app.use(requestId({ generator: () => crypto.randomUUID() }));
   app.use(logger());
