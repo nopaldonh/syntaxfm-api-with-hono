@@ -1,10 +1,8 @@
-import type { RouteHandler } from "@hono/zod-openapi";
-
-import type { AppBindings } from "@/lib/types";
+import type { AppRouteHandler } from "@/lib/types";
 
 import type { ListRoute } from "./tasks.route";
 
-export const list: RouteHandler<ListRoute, AppBindings> = (c) => {
+export const list: AppRouteHandler<ListRoute> = (c) => {
   return c.json([
     {
       name: "Learn Hono",
