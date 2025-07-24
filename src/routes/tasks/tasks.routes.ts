@@ -33,7 +33,12 @@ export const create = createRoute({
       selectTasksSchema,
       "The created task",
     ),
+    [HttpStatusCodes.UNPROCESSABLE_ENTITY]: jsonContent(
+      z.object({}),
+      "The validation error(s)",
+    ),
   },
 });
 
 export type ListRoute = typeof list;
+export type CreateRoute = typeof create;
