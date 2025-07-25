@@ -81,6 +81,10 @@ export const patch = createRoute({
       selectTasksSchema,
       "The updated task",
     ),
+    [HttpStatusCodes.NOT_FOUND]: jsonContent(
+      notFoundSchema,
+      "Task not found",
+    ),
     [HttpStatusCodes.UNPROCESSABLE_ENTITY]: jsonContentOneOf(
       [
         createErrorSchema(patchTasksSchema),
@@ -94,3 +98,4 @@ export const patch = createRoute({
 export type ListRoute = typeof list;
 export type CreateRoute = typeof create;
 export type GetOneRoute = typeof getOne;
+export type PatchRoute = typeof patch;
